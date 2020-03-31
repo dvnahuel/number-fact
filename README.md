@@ -1,1 +1,1 @@
-# NumberRandomFact
+# number-fact
