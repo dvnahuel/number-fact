@@ -1,19 +1,26 @@
-let fact = document.querySelector('#fact');
-let factText = document.querySelector('#factText');
+const fact = document.querySelector('#fact');
+const factText = document.querySelector('#factText');
+const numberInput = document.querySelector('#numberInput');
+const loader = document.querySelector('.loader');
 
-let numberInput = document.querySelector('#numberInput');
-    numberInput.addEventListener('input', getFactFetch);
+numberInput.addEventListener('input', getFactFetch);
+function getFactFetch() {
+  let number = numberInput.value;
 
-    function getFactFetch(){
-      let number = numberInput.value;
-      
-      if(number != ''){
-        fetch('http://numbersapi.com/'+number)
-        .then(response => response.text())
-        .then(data => {
-          fact.style.display = 'block';
-          factText.innerText = data;
-        })
-        .catch(err => console.log(err)); 
-      }
-    }
+  if (number != '') {
+    //Star Loading
+    loader.style.display = 'block';
+    fact.style.display = 'block';
+
+    fetch('http://numbersapi.com/' + number)
+      .then(response => response.text())
+      .then(data => {
+        factText.innerText =  `"${data}"`;
+      })
+      .catch(err => console.log(err))
+      .finally(() => {
+        //Finish loading
+        loader.style.display = 'none';
+      })
+  }
+}
